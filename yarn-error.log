@@ -1,0 +1,36 @@
+Arguments: 
+  D:\programs\node.exe D:\programs\bin\yarn.js add bcryptjs express express-session helmet knex mysl nodemon sqlite3
+
+PATH: 
+  C:\Users\kjwas\bin;D:\Programs\Git\mingw64\bin;D:\Programs\Git\usr\local\bin;D:\Programs\Git\usr\bin;D:\Programs\Git\usr\bin;D:\Programs\Git\mingw64\bin;D:\Programs\Git\usr\bin;C:\Users\kjwas\bin;E:\Oculus\Support\oculus-runtime;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\windows\system32;C:\windows;C:\windows\system32\wbem;C:\windows\system32\windowspowershell\v1.0;C:\windows\system32\openssh;C:\program files\nvidia corporation\nvidia nvdlisr;D:\programs;D:\programs\bin;C:\Users\kjwas\AppData\Local\Microsoft\WindowsApps;D:\Programs\Microsoft VS Code\bin;C:\Users\kjwas\AppData\Roaming\npm;C:\Users\kjwas\AppData\Local\Yarn\bin;D:\Programs\Git\usr\bin\vendor_perl;D:\Programs\Git\usr\bin\core_perl
+
+Yarn version: 
+  1.12.3
+
+Node version: 
+  10.14.1
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/mysl: Not found
+      at Request.params.callback [as _callback] (D:\programs\lib\cli.js:65003:18)
+      at Request.self.callback (D:\programs\lib\cli.js:129018:22)
+      at Request.emit (events.js:182:13)
+      at Request.<anonymous> (D:\programs\lib\cli.js:129990:10)
+      at Request.emit (events.js:182:13)
+      at IncomingMessage.<anonymous> (D:\programs\lib\cli.js:129912:12)
+      at Object.onceWrapper (events.js:273:13)
+      at IncomingMessage.emit (events.js:187:15)
+      at endReadableNT (_stream_readable.js:1094:12)
+      at process._tickCallback (internal/process/next_tick.js:63:19)
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
