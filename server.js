@@ -18,6 +18,10 @@ server.get("/", (req, res) => {
 });
 
 //the actual code for the project
+//use jwt 
+const jwt = require('jsonwebtoken');
+//use my secrets
+const secrets = require('./data/config/secrets')
 
 //Not sure if we need cookies
 // //declare sessionConfig
@@ -78,7 +82,9 @@ server.post("/api/login", (req, res) => {
   .then(user => {
     //compare the hashed password in the database against the incoming password
     if (user && bcrypt.compareSync(password, user.password)) {
-      res.status(200).json({ message: `Welcome ${user.username}!` })
+      const token = generateToken(user);
+
+      res.status(200).json({ message: `Welcome ${user.username}!`, token, })
     } else {
       res.status(401).json({ message: `new phone who this` })
     }
@@ -87,6 +93,18 @@ server.post("/api/login", (req, res) => {
     res.status(500).json(error)
   })
 })
+
+//put this in its own folder in production
+function generateToken(user) {
+  const payload = { //header and payload can be seen by the client, not encrypted
+    subject: user.id, //sub property, who is this token for?
+    username: user.username,
+  }
+  const options = {
+    expiresIn: '2m',
+  }
+  return jwt.sign(payload, secrets.jwtSecret, options)
+}
 
 
 //get all users
@@ -114,11 +132,26 @@ function logger(req, res, next) {
 //verification middleware
 //note: verification middleware should be in its own folder in ./auth/ directory
 
-function verify(req, res, next){
-  if (req.session && req.session.user) {
-   next();
-} else {
-  res.status(400).json({ message: 'Please provide valid credentials'})
-}}
+function verify(req, res, next) {
+  //get token from headers
+  const token = req.headers.token;
+  if (token) {
+    //decoding token
+    console.log(req.headers.token + ' LINE 141')
+    console.log(secrets.jwtSecret)
+    jwt.verify(token, secrets.jwtSecret, (err, decodedToken) => {
+      //if error means is an invalid or tempered token
+      if (err) {
+        res.status(401).json({ message: 'Invalid token!' });
+      } else {
+        //if no error then it was decoded and is valid
+        req.decodedJWT = decodedToken;
+        next();
+      }
+    });
+  } else {
+    //No token
+    res.status(401).json({ message: 'Missing token!' });
+  }}
 
 module.exports = server;
