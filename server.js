@@ -72,14 +72,12 @@ server.post("/api/register", async (req, res) => {
 server.post("/api/login", (req, res) => {
   //destructure username and password
   let { username, password } = req.body;
-
   //use findby method in model to username from req.body
   db.findBy({ username })
   .first()
   .then(user => {
     //compare the hashed password in the database against the incoming password
     if (user && bcrypt.compareSync(password, user.password)) {
-      req.session.user = user; //saves the user information to the session in a cookie
       res.status(200).json({ message: `Welcome ${user.username}!` })
     } else {
       res.status(401).json({ message: `new phone who this` })
